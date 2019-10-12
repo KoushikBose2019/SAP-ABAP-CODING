@@ -1,0 +1,129 @@
+TYPES: begin of str_a,
+       id   TYPE char4,
+       name TYPE char10,
+       age TYPE  char2,
+       address Type char10,
+       city type char10,
+       sal type int4,
+
+       end of str_a.
+
+
+DATA: it_tab TYPE STANDARD TABLE OF str_a,
+      wa_a TYPE str_a.
+DATA: it_tab1 TYPE STANDARD TABLE OF str_a,
+      wa_a1 TYPE str_a.
+DATA: it_tab2 TYPE STANDARD TABLE OF str_a,
+      wa_a2 TYPE str_a.
+DATA: it_tab3 TYPE STANDARD TABLE OF str_a,
+      wa_a3 TYPE str_a.
+DATA: total_no_record TYPE i.
+
+wa_a-id = '001'.
+wa_a-name = 'john'.
+wa_a-age = '28'.
+wa_a-address ='dum dum'.
+wa_a-city = 'kolkata'.
+wa_a-sal = '64000'.
+APPEND wa_a TO it_tab.
+clear wa_a.
+
+wa_a-id = '002'.
+wa_a-name = 'steve'.
+wa_a-age = '28'.
+wa_a-address = 'shyambazar'.
+wa_a-city = 'kolkata'.
+wa_a-sal = '74000'.
+APPEND wa_a TO it_tab.
+clear wa_a.
+
+wa_a-id = '003'.
+wa_a-name = 'tony'.
+wa_a-age = '29'.
+wa_a-address = 'maniktala'.
+wa_a-city = 'kolkata'.
+wa_a-sal = '85000'.
+APPEND wa_a TO it_tab.
+clear wa_a.
+
+wa_a-id = '004'.
+wa_a-name = 'cruz'.
+wa_a-age = '30'.
+wa_a-address = 'puri'.
+wa_a-city = 'bhubonewar'.
+wa_a-sal = '95000'.
+APPEND wa_a TO it_tab.
+clear wa_a.
+
+wa_a-id = '005'.
+wa_a-name = 'hulk'.
+wa_a-age = '32'.
+wa_a-address = 'jamsedpur'.
+wa_a-city = 'patna'.
+wa_a-sal = '115000'.
+APPEND wa_a TO it_tab.
+clear wa_a.
+
+
+wa_a-id = '006'.
+wa_a-name = 'tanos'.
+wa_a-age = '34'.
+wa_a-address = 'durgapur'.
+wa_a-city = 'kolkata'.
+wa_a-sal = '125000'.
+APPEND wa_a TO it_tab.
+clear wa_a.
+
+
+wa_a-id = '007'.
+wa_a-name = 'spider-man'.
+wa_a-age = '32'.
+wa_a-address = 'new york'.
+wa_a-city = 'usa'.
+wa_a-sal = '145000'.
+
+insert wa_a into it_tab INDEX 7.
+clear wa_a.
+
+DESCRIBE TABLE it_tab LINES total_no_record.
+sort it_tab.
+DELETE ADJACENT DUPLICATES FROM it_tab.
+
+WRITE:'internal table is like : .............' color 7.
+
+LOOP AT it_tab into wa_a.
+
+WRITE: / 'id : ',wa_a-id,
+      'name: ', wa_a-name,
+      'age: ',wa_a-age,
+     'adddress: ',wa_a-address,
+   'city: ',wa_a-city,
+   'sal: ',wa_a-sal,
+   'count: ',total_no_record.
+
+ENDLOOP.
+
+ULINE.
+MOVE it_tab[] to it_tab1[].
+
+wa_a1-name = 'ganesh'.
+MODIFY it_tab1 FROM wa_a1 TRANSPORTING name id age WHERE name = 'cruz'.
+wa_a1-age = '50'.
+
+MODIFY it_tab FROM wa_a INDEX 4   TRANSPORTING age.
+wa_a1-age = '50'.
+
+APPEND LINES OF it_tab FROM 1 to 4 to it_tab2.
+LOOP AT  it_tab2 INTO wa_a2.
+WRITE:/ wa_a2-name,
+        wa_a2-age,
+        wa_a2-address.
+ENDLOOP.
+
+INSERT LINES OF it_tab INTO table  it_tab2.
+LOOP AT it_tab2 INTO wa_a2.
+WRITE: / wa_a2-name,
+        wa_a2-age,
+        wa_a2-address,
+         wa_a2-sal.
+ENDLOOP.
