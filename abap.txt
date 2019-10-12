@@ -1,0 +1,121 @@
+REPORT zit_tab_operation.
+TYPES: BEGIN OF str_a,
+         id      TYPE char3,
+         name    TYPE char10,
+         age     TYPE char2,
+         address TYPE  char10,
+
+       END OF str_a.
+
+DATA: it_tab TYPE STANDARD TABLE OF str_a,
+      wa_a   TYPE str_a.
+DATA: it_tab1 TYPE STANDARD TABLE OF str_a,
+      wa_a1   TYPE str_a.
+
+data: it_tab2 TYPE STANDARD TABLE OF str_a,
+      wa_2 TYPE str_a.
+
+DATA:total_no_record TYPE i.
+
+wa_a-id = '001'.
+wa_a-name = 'ram'.
+wa_a-age = '10'.
+wa_a-address = 'delhi'.
+APPEND wa_a TO it_tab.
+CLEAR wa_a.
+
+wa_a-id = '001'.
+wa_a-name = 'ram'.
+wa_a-age = '10'.
+wa_a-address = 'delhi'.
+APPEND wa_a TO it_tab.
+CLEAR wa_a.
+
+wa_a-id = '002'.
+wa_a-name = 'sham'.
+wa_a-age = '12'.
+wa_a-address = 'pune'.
+APPEND wa_a TO it_tab.
+CLEAR wa_a.
+
+wa_a-id = '004'.
+wa_a-name = 'krishna'.
+wa_a-age = '20'.
+wa_a-address = 'mumbai'.
+APPEND wa_a TO it_tab.
+CLEAR wa_a.
+
+wa_a-id = '003'.
+wa_a-name = 'ram'.
+wa_a-age = '10'.
+wa_a-address = 'delhi'.
+INSERT wa_a INTO it_tab  INDEX 3.
+CLEAR wa_a.
+DESCRIBE TABLE it_tab LINES total_no_record .
+
+*DELETE ADJACENT DUPLICATES FROM it_tab.
+SORT it_tab.
+DELETE ADJACENT DUPLICATES FROM it_tab.
+
+
+LOOP AT it_tab into wa_a .
+ WRITE:/ wa_a-id,
+         wa_a-name,
+         wa_a-age.
+ENDLOOP.
+
+
+
+
+
+
+*DELETE ADJACENT DUPLICATES FROM it_tab.
+*SORT it_tab .
+*LOOP AT  it_tab INTO wa_a.
+*
+*  WRITE:/
+*  wa_a-id,
+*  wa_a-name,
+*  wa_a-age,
+*  wa_a-address.
+*
+*ENDLOOP.
+*ULINE.
+*
+*MOVE it_tab[] TO it_tab1[].
+*
+*wa_a1-name = 'ganesh'.
+*MODIFY it_tab1 FROM wa_a1 TRANSPORTING name id age WHERE name = 'sham'.
+*wa_a1-age = '50'.
+*
+*MODIFY it_tab1 FROM wa_a1  INDEX  4    TRANSPORTING age.
+*wa_a1-age = '50'.
+*MODIFY it_tab1 FROM wa_a1  INDEX  3    TRANSPORTING age.
+*wa_a1-name = 'raman'.
+*MODIFY it_tab1 FROM wa_a1  INDEX  2    TRANSPORTING name.
+*
+*DELETE ADJACENT DUPLICATES FROM it_tab.
+**DELETE ADJACENT DUPLICATES FROM it_tab1 COMPARING address .
+*
+*LOOP AT it_tab1 INTO wa_a1.
+*  WRITE:/
+*  wa_a1-name,
+*  wa_a1-age,
+*  wa_a1-address.
+*
+*
+*ENDLOOP.
+*
+*
+*
+*
+*APPEND LINES OF it_tab FROM 1 to 4 to it_tab2.
+*delete it_tab2 INDEX 1.
+*ULINE.
+*LOOP AT  it_tab2 INTO wa_2.
+*  WRITE :/
+*  wa_2-name,
+*  wa_2-age,
+*  wa_2-address.
+*
+*ENDLOOP.
